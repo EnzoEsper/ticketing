@@ -14,7 +14,7 @@ router.post("/api/users/signup", [
     .isLength({ min: 4, max: 20 })
     .withMessage('Password must be between 4 and 20 characters')
 ],
-(req: Request, res: Response) => {
+async (req: Request, res: Response) => {
   // validationResult inspects the request and pull out any info that was appended to the req during the validation step 
   const errors = validationResult(req);
 
