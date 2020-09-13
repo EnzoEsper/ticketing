@@ -1,9 +1,16 @@
 import mongoose from 'mongoose';
+import { textSpanContainsPosition } from 'typescript';
 
 // interface that describes the properties that are required to create a new user
 interface UserAttrs {
   email: string;
   password: string;
+}
+
+// interface that describes the properties that a User Model has
+// we are going to take all the properties that already exists on the extended interface and add new properties on top of that
+interface UserModel extends mongoose.Model<any> {
+  build(attrs: UserAttrs): any;
 }
 
 // with the schema we tell mongoose about all the props that users is going to have
@@ -18,13 +25,12 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-// feed the schema to mongoose so it creates a model with it
-const User = mongoose.model('User', userSchema);
-
-// we are going to use buildUser() instead of use new User(), only for type checking with Ts purposes
-const buildUser = (attrs: UserAttrs) => {
+userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
 
-export { User, buildUser };
+// feed the schema to mongoose so it creates a model with it
+const User = mongoose.model<any, UserModel>('User', userSchema);
+
+export { User };
 
