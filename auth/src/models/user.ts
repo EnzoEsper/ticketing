@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { textSpanContainsPosition } from 'typescript';
+import { Password } from '../services/password';
 
 // interface that describes the properties that are required to create a new user
 interface UserAttrs {
@@ -30,6 +30,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+});
+
+// using a middleware function (implemented in mongoose) for hashing the text of the pass before saving it
+userSchema.pre('save', async function(done) {
+  // this refers to the user thas is being created
+  const user = this;
+
+  // if the password is already hashed, we dont wanna hash it again. We only wanna hash
+  // the password if it is modified by the user. THIS IS GONNA BE TRUE FOR a new user and
+  // when a user modify the pass
+  if (user.isModified("password")) {
+    const hashed = await Password.toHash(this.get('password'));  
+    this.set('password', hashed);
+  }
+  
+  done();
 });
 
 userSchema.statics.build = (attrs: UserAttrs) => {
