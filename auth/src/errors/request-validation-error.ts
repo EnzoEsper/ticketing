@@ -4,7 +4,7 @@ import { CustomError } from "./custom-error";
 export class RequestValidationError extends CustomError {
   statusCode = 400;
 
-  // the keyword private allows to take the property errors passed as a parameter and asign as a property to the overall class
+  // the keyword private/public allows to take the property errors passed as a parameter and asign as a property to the overall class
   constructor(public errors: ValidationError[]) {
     // only for logging purposes, this is not sending to the users
     super('Invalid request parameters');
