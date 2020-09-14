@@ -30,6 +30,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+}, {
+  // formatting json properties that are returned by mongoose as a response when making a post request to signup
+  // this is gonna tell mongoose that take a user document and turn it to json with the customizations that are described
+  toJSON: {
+    transform(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.password;
+      delete ret.__v;
+    }
+  }
 });
 
 // using a middleware function (implemented in mongoose) for hashing the text of the pass before saving it
