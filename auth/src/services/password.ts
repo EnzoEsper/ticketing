@@ -10,7 +10,7 @@ export class Password {
 
   static async compare(storedPassword: string, suppliedPassword: string) {
     // return true or false dependig if its match or not
-    const isMatch = await bcrypt.compare(storedPassword, suppliedPassword);
+    const isMatch = await bcrypt.compare(suppliedPassword, storedPassword);
 
     return isMatch;
   }
