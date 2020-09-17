@@ -6,6 +6,10 @@ import { app } from "../app";
 // in-memory that allows run multiple different test suits at the same time across different projects without them all trying to reach out to the same copy of mongo 
 let mongo: any;
 beforeAll(async () => {
+  // setting up the environment variable wit the jwt secret
+  // because the environment variable defined in the signup.ts file only gets defined when we run our code inside a pod in the k8s cluster 
+  process.env.JWT_KEY = 'asdf';
+
   // starting up mongo memory server and connectign mongoose to it
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();

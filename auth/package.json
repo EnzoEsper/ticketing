@@ -14,6 +14,11 @@
       "./src/test/setup.ts"
     ]
   },
+  "config": {
+    "mongodbMemoryServer": {
+      "version": "3.6.20"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
