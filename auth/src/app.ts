@@ -18,7 +18,7 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false, // disable encryption of the cookie that contains the jwt
-    secure: true // cookie is only being used if the user is using the app over https (little secure improvement)
+    secure: process.env.NODE_ENV !== 'test' // cookie is only being used if the user is using the app over https (little secure improvement)
   })
 );
 
