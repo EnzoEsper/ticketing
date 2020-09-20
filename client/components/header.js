@@ -1,6 +1,24 @@
 import Link from 'next/link';
 
 export default ({ currentUser }) => {
+
+  // conditionally build the links depending if the user is signed in or not
+  const links = [
+    !currentUser && { label: 'Sign Up', href: '/auth/signup' },
+    !currentUser && { label: 'Sign In', href: '/auth/signin' },
+    currentUser && { label: 'Sign Out', href: '/auth/signout' }
+  ]
+    .filter(linkConfig => linkConfig) // filter falsy entries
+    .map(({ label, href }) => {
+      return (
+        <li key={href} className="nav-item">
+          <Link href={href}>
+            <a className="nav-link">{label}</a>
+          </Link>
+        </li>
+      );
+    });
+
   return(
     <nav className="navbar navbar-light bg-light">
       <Link href="/">
@@ -9,7 +27,7 @@ export default ({ currentUser }) => {
 
       <div className="d-flex justify-content-end">
         <ul className="nav d-flex align-items-center">
-          {currentUser ? 'Sign out' : 'Sign in/up'}
+          {links}
         </ul>
       </div>
     </nav>
