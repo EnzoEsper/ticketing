@@ -1,8 +1,7 @@
 import buildClient from '../api/buildClient';
 
 const LandingPage = ({ currentUser }) => {
-  console.log(currentUser);
-  return <h1>Landing Page</h1>;
+  return currentUser ? <h1>You are signed in</h1> : <h1>You are NOT signed in</h1>;
 };
 
 // This is gonna be executed during the server side rendering process (can be executed in the browser under very particular circumstances), 
