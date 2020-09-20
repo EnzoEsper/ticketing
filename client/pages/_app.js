@@ -1,6 +1,7 @@
 // if we ever want to include some global css into the project (which bootstrap is) we con only import it into this _app.js file
 import 'bootstrap/dist/css/bootstrap.css';
 import buildClient from '../api/build-client';
+import Header from '../components/header';
 
 // nexts wraps up each component inside this custom component before showing it
 // whenever we try to visit some component, next is going to import that component and passing it into this custom component as the Component prop, 
@@ -8,7 +9,7 @@ import buildClient from '../api/build-client';
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return(
     <div>
-      <h1>Header! {currentUser.email} </h1>
+      <Header currentUser={currentUser}/>
       <Component {...pageProps} />
     </div>
   );
