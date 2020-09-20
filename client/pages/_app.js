@@ -5,10 +5,10 @@ import buildClient from '../api/build-client';
 // nexts wraps up each component inside this custom component before showing it
 // whenever we try to visit some component, next is going to import that component and passing it into this custom component as the Component prop, 
 // and then pagePropos are gonna be the set of components that we possibly pass to the Component   
-const AppComponent = ({ Component, pageProps }) => {
+const AppComponent = ({ Component, pageProps, currentUser }) => {
   return(
     <div>
-      <h1>Header!</h1>
+      <h1>Header! {currentUser.email} </h1>
       <Component {...pageProps} />
     </div>
   );
@@ -27,9 +27,11 @@ AppComponent.getInitialProps = async (appContext) => {
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
   }
-  console.log(pageProps);
-
-  return data;
+  
+  return {
+    pageProps,
+    currentUser: data.currentUser
+  }
 };
 
 export default AppComponent;
