@@ -2,7 +2,7 @@ import express from "express";
 import 'express-async-errors';
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
-import { errorHandler, NotFoundError } from "@tickgit/common";
+import { errorHandler, NotFoundError, currentUser } from "@tickgit/common";
 import { createTicketRouter } from './routes/new';
 
 const app = express(); 
@@ -16,6 +16,7 @@ app.use(
     secure: process.env.NODE_ENV !== 'test' // cookie is only being used if the user is using the app over https (little secure improvement)
   })
 );
+app.use(currentUser);
 
 app.use(createTicketRouter);
 
